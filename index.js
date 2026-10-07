@@ -24,6 +24,23 @@ const connection = mysql.createConnection({
     password:""
 })
 
+//let q = "SHOW TABLES";
+
+//Inserting New Data of single user
+/*
+let q = "INSERT INTO user(id, username, email,password) VALUES (?,?,?,?)";
+let user = ["123", "rahul@123","rahul@gmail.com","abcd"];
+*/
+
+/*
+//To enter two user data same time
+let q = "INSERT INTO user(id, username, email,password) VALUES ?";
+let users = [["123b", "rahul@123b","rahul@gmail.comb","abcdb"],
+             ["123c", "rahul@123c","rahul@gmail.comc","abcdc"],
+            ];
+
+try{
+
 
 
 
