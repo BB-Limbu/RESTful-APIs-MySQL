@@ -41,8 +41,103 @@ let users = [["123b", "rahul@123b","rahul@gmail.comb","abcdb"],
 
 try{
 
+    //Name  query to run any query in a database query like "SHOW TABLES"
+    //In actual result is an array it print different object.single user only user
+connection.query(q,[users], (err, result) =>{
+    if(err) throw err;
+    console.log(result);
+    // console.log(result.length);
+    // console.log(result[0]);
+    // console.log(result[1]);
+})
+}catch(err){
+    console.log(err);
+}
+
+connection.end();
+
+*/
+
+/*
+const getRandomUser = ()=> {
+  return {
+    id: faker.string.uuid(),
+    username: faker.internet.username(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+  };
+}
+  */
 
 
+
+//<========================================================================>
+//Insert data in Bulk Using faker
+const getRandomUser = ()=> {
+  return [
+     faker.string.uuid(),
+     faker.internet.username(),
+    faker.internet.email(),
+    faker.internet.password(),
+];
+}
+
+
+/*
+//Inserting data into table
+let q1 = "INSERT INTO user(id, username, email,password) VALUES ?";
+
+let data = [];
+for(let i = 1; i <= 100; i++){
+    data.push(getRandomUser()); // 100 fake users
+}
+try{
+    connection.query(q1, [data], (err, result) =>{
+        if(err) throw err;
+        console.log(result);
+    })
+}catch(err){
+    console.log(err);
+}
+
+connection.end();
+*/
+
+//Fetch and show total number of users on our app
+app.get("/", (req, res) =>{
+    let q = `SELECT count(*) FROM user`;
+
+    try{
+        connection.query(q, (err, result) =>{
+            if(err) throw err;
+           let count = result[0]["count(*)"];
+            res.render("home.ejs", {count});
+        })
+    }catch(err){
+        console.log(err);
+        res.send("Some error in DB");
+    }
+})
+
+
+//Show route that bring all data from database on display
+app.get("/user", (req, res) =>{
+    //This is query
+    let q = `SELECT * FROM user`
+
+    try{
+        connection.query(q, (err, users) =>{
+            if(err) throw err;
+            //console.log(user);
+            //res.send(user);
+            res.render("showusers.ejs", {users})
+        })
+    }catch(err){
+        console.log(err);
+        res.send("Some error in DB");
+    }
+    
+})
 
 
 app.listen("8080", ()=>{
